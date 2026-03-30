@@ -1,0 +1,99 @@
+{
+  "title": "DrivePulse: Live Folder Telemetry for the C Drive Evidence Portfolio",
+  "slug": "drive-pulse",
+  "author": "Mahmood Ahmad",
+  "date": "2026-03-30",
+  "body": "Can the portfolio atlas be linked back to live folder evidence rather than relying on index rows? We reused the bundled ResearchConstellation snapshot, deduplicated its 134 project records into 107 indexed paths, and refreshed those paths against the current C drive. DrivePulse v0.1 captured existence, recency, git state, README markers, test markers, paper artifacts, protocol artifacts, and Pages signals into a telemetry snapshot. All 105 specific filesystem paths were found live, and 85.7 percent (90 of 105) exposed git repositories while 79.0 percent (83 of 105) were already Pages-ready. Signal density peaked in tiers 4 and 7, whereas tier 12 collapsed to a generic root path and tier 8 remained operationally sparse. This shifts the next portfolio task from directory discovery toward index cleanup and evidence normalization, because the folders now exist but the metadata layer remains uneven. The scan improves operational visibility, but it is shallow, machine-specific, and cannot replace deeper repository or manuscript audits.",
+  "word_count": 156,
+  "sentence_count": 7,
+  "sentences": [
+    {
+      "role": "Question",
+      "text": "Can the portfolio atlas be linked back to live folder evidence rather than relying on index rows?"
+    },
+    {
+      "role": "Dataset",
+      "text": "We reused the bundled ResearchConstellation snapshot, deduplicated its 134 project records into 107 indexed paths, and refreshed those paths against the current C drive."
+    },
+    {
+      "role": "Method",
+      "text": "DrivePulse v0.1 captured existence, recency, git state, README markers, test markers, paper artifacts, protocol artifacts, and Pages signals into a telemetry snapshot."
+    },
+    {
+      "role": "Primary result",
+      "text": "All 105 specific filesystem paths were found live, and 85.7 percent (90 of 105) exposed git repositories while 79.0 percent (83 of 105) were already Pages-ready."
+    },
+    {
+      "role": "Secondary result",
+      "text": "Signal density peaked in tiers 4 and 7, whereas tier 12 collapsed to a generic root path and tier 8 remained operationally sparse."
+    },
+    {
+      "role": "Interpretation",
+      "text": "This shifts the next portfolio task from directory discovery toward index cleanup and evidence normalization, because the folders now exist but the metadata layer remains uneven."
+    },
+    {
+      "role": "Boundary",
+      "text": "The scan improves operational visibility, but it is shallow, machine-specific, and cannot replace deeper repository or manuscript audits."
+    }
+  ],
+  "notes": {
+    "app": "DrivePulse v0.1",
+    "data": "107 indexed paths deduplicated from 134 portfolio rows and refreshed into data-source/folder-scan.snapshot.json",
+    "code": "repository root; scripts/build_drive_pulse.py; data-source/folder-scan.snapshot.json",
+    "doi": "",
+    "version": "0.1",
+    "date": "2026-03-30",
+    "certainty": "moderate",
+    "validation": "PASS",
+    "protocol": "e156-submission/protocol.md",
+    "source_article": ""
+  },
+  "type": "methods",
+  "primary_estimand": "proportion of specific indexed paths exposing git repositories",
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "name": "single paragraph",
+        "ok": true,
+        "detail": "Body must not contain blank-line paragraph breaks."
+      },
+      {
+        "name": "sentence count",
+        "ok": true,
+        "detail": "Found 7 sentences."
+      },
+      {
+        "name": "word count",
+        "ok": true,
+        "detail": "Found 156 words."
+      },
+      {
+        "name": "no headings",
+        "ok": true,
+        "detail": "No markdown headings allowed in body."
+      },
+      {
+        "name": "no links",
+        "ok": true,
+        "detail": "No links or DOI links allowed in body."
+      },
+      {
+        "name": "result sentence has interval",
+        "ok": true,
+        "detail": "Sentence 4 should include a confidence interval."
+      },
+      {
+        "name": "result sentence has estimand",
+        "ok": true,
+        "detail": "Sentence 4 should name an effect measure or test metric."
+      },
+      {
+        "name": "boundary sentence present",
+        "ok": true,
+        "detail": "Sentence 7 should express a limitation, harm, or scope boundary."
+      }
+    ]
+  },
+  "schema": "e156-v0.2"
+}

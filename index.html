@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DrivePulse</title>
+  <meta name="description" content="Live folder telemetry dashboard for the C-drive research portfolio.">
+  <style>
+    :root {
+      --bg: #eef2f7;
+      --ink: #17202a;
+      --muted: #556477;
+      --line: rgba(23, 32, 42, 0.12);
+      --panel: rgba(249, 251, 254, 0.94);
+      --accent: #1d4ed8;
+      --accent-2: #b45309;
+      --shadow: 0 24px 60px rgba(23, 32, 42, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Bahnschrift", "Trebuchet MS", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(29, 78, 216, 0.12), transparent 22%),
+        radial-gradient(circle at 82% 18%, rgba(180, 83, 9, 0.12), transparent 22%),
+        linear-gradient(180deg, #f7f9fc 0%, #e8edf4 100%);
+    }
+    main {
+      width: min(1160px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+    .hero, .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .hero { grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr); }
+    .eyebrow {
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.76rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    h1, h2 {
+      margin: 0;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+    h1 { font-size: clamp(2.3rem, 5vw, 4.6rem); }
+    h2 { font-size: 1.45rem; }
+    p { line-height: 1.7; color: var(--muted); }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .value {
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .row strong { display: block; color: var(--ink); }
+    .row span { display: block; color: var(--muted); }
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(29, 78, 216, 0.1);
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      text-align: right;
+    }
+    a { color: var(--accent-2); font-weight: 700; text-decoration: none; }
+    .section { margin-top: 18px; }
+    @media (max-width: 860px) {
+      .hero, .grid, .stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel hero">
+      <div>
+        <p class="eyebrow">Live Folder Evidence</p>
+        <h1>DrivePulse</h1>
+        <p>
+          A new project that turns the indexed C-drive paths into auditable telemetry: existence, recency, git state,
+          README and test markers, paper artifacts, and Pages signals captured into a bundled scan snapshot.
+        </p>
+      </div>
+      <aside class="panel" style="padding:18px">
+        <p class="eyebrow" style="margin-bottom:10px">Scan Metrics</p>
+        <div class="stats" id="metric-grid"></div>
+      </aside>
+    </section>
+
+    <section class="grid section">
+      <section class="panel">
+        <p class="eyebrow">Signal Mix</p>
+        <h2>What the live scan actually found</h2>
+        <div class="stack" id="signal-breakdown"></div>
+      </section>
+      <section class="panel">
+        <p class="eyebrow">Activity Bands</p>
+        <h2>How recent the indexed paths look</h2>
+        <div class="stack" id="activity-breakdown"></div>
+      </section>
+    </section>
+
+    <section class="grid section">
+      <section class="panel">
+        <p class="eyebrow">Best Tiers</p>
+        <h2>Tiers with the strongest folder evidence</h2>
+        <div class="stack" id="best-tiers"></div>
+      </section>
+      <section class="panel">
+        <p class="eyebrow">Recent Paths</p>
+        <h2>Recently modified specific paths</h2>
+        <div class="stack" id="recent-paths"></div>
+      </section>
+    </section>
+
+    <section class="grid section">
+      <section class="panel">
+        <p class="eyebrow">Evidence-Rich Paths</p>
+        <h2>Paths with multiple operational signals</h2>
+        <div class="stack" id="evidence-rich"></div>
+      </section>
+      <section class="panel">
+        <p class="eyebrow">Missing Paths</p>
+        <h2>Indexed paths not found on the live drive</h2>
+        <div class="stack" id="missing-paths"></div>
+      </section>
+    </section>
+
+    <section class="panel section">
+      <p class="eyebrow">Generic Paths</p>
+      <h2>Rows that still cannot be scanned precisely</h2>
+      <div class="stack" id="generic-paths"></div>
+    </section>
+
+    <section class="panel section">
+      <p class="eyebrow">Artifacts</p>
+      <h2>Repo outputs</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="label">Scan snapshot</span>
+          <strong>data-source/folder-scan.snapshot.json</strong>
+          <p>The bundled live folder scan preserved for reproducible dashboard rebuilds.</p>
+          <a href="data-source/folder-scan.snapshot.json">Open scan snapshot</a>
+        </article>
+        <article class="card">
+          <span class="label">Builder</span>
+          <strong>scripts/build_drive_pulse.py</strong>
+          <p>Snapshot-first generator with optional `--live-scan` refresh against the current C drive.</p>
+          <a href="scripts/build_drive_pulse.py">Open builder</a>
+        </article>
+        <article class="card">
+          <span class="label">Reader</span>
+          <strong>e156-submission/index.html</strong>
+          <p>The E156 paper and protocol capsule for the folder-evidence method.</p>
+          <a href="e156-submission/index.html">Open E156 reader</a>
+        </article>
+        <article class="card">
+          <span class="label">Source snapshot</span>
+          <strong>data-source/portfolio-data.snapshot.json</strong>
+          <p>The bundled portfolio snapshot that defines which paths are scanned.</p>
+          <a href="data-source/portfolio-data.snapshot.json">Open portfolio snapshot</a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <script src="data.js"></script>
+  <script>
+    const data = window.DRIVE_PULSE_DATA;
+    function card(label, value) {
+      return '<div class="card"><span class="label">' + label + '</span><span class="value">' + value + '</span></div>';
+    }
+    function row(title, subtitle, value) {
+      return '<div class="row"><div><strong>' + title + '</strong><span>' + subtitle + '</span></div><span class="pill">' + value + '</span></div>';
+    }
+    document.getElementById('metric-grid').innerHTML = [
+      card('Unique paths', data.metrics.uniquePaths),
+      card('Specific paths', data.metrics.specificPaths),
+      card('Git repos', data.metrics.gitRepos),
+      card('Pages-ready', data.metrics.pagesReadyPaths)
+    ].join('');
+    document.getElementById('signal-breakdown').innerHTML = data.signalBreakdown.map(function(item) {
+      return row(item.label, 'Paths carrying this signal', item.count);
+    }).join('');
+    document.getElementById('activity-breakdown').innerHTML = data.activityBreakdown.map(function(item) {
+      return row(item.band, 'Specific indexed paths', item.count);
+    }).join('');
+    document.getElementById('best-tiers').innerHTML = data.tierSignals.slice(0, 8).map(function(item) {
+      return row(item.tier, item.paths + ' paths | ' + item.missing + ' missing', item.meanSignals + ' signals');
+    }).join('');
+    document.getElementById('recent-paths').innerHTML = data.recentPaths.map(function(item) {
+      return row(item.linkedProjects.join(', '), item.path, item.activityBand + ' | ' + item.ageDays + 'd');
+    }).join('');
+    document.getElementById('evidence-rich').innerHTML = data.evidenceRichPaths.map(function(item) {
+      return row(item.linkedProjects.join(', '), item.path, item.operationalSignals + ' signals');
+    }).join('');
+    document.getElementById('missing-paths').innerHTML = data.missingPaths.map(function(item) {
+      return row(item.linkedProjects.join(', '), item.path, 'missing');
+    }).join('');
+    document.getElementById('generic-paths').innerHTML = data.genericPaths.map(function(item) {
+      return row(item.linkedProjects.join(', '), item.path, item.reason);
+    }).join('');
+  </script>
+</body>
+</html>

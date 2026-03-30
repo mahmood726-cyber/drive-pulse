@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DrivePulse E156</title>
+  <meta name="description" content="E156 micro-paper and protocol for DrivePulse.">
+  <style>
+    :root {
+      --bg: #eef2f7;
+      --ink: #17202a;
+      --muted: #556477;
+      --line: rgba(23, 32, 42, 0.12);
+      --panel: rgba(249, 251, 254, 0.94);
+      --accent: #1d4ed8;
+      --accent-2: #b45309;
+      --shadow: 0 24px 60px rgba(23, 32, 42, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Bahnschrift", "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 18%, rgba(29, 78, 216, 0.12), transparent 24%),
+        radial-gradient(circle at 80% 20%, rgba(180, 83, 9, 0.12), transparent 24%),
+        linear-gradient(180deg, #f7f9fc 0%, #e8edf4 100%);
+    }
+    main {
+      width: min(980px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: 18px;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    h1, h2 {
+      margin: 0;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+    h1 { font-size: clamp(2.2rem, 5vw, 4rem); }
+    h2 { font-size: 1.45rem; }
+    p {
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .meta-grid, .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .meta-card, .artifact-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .label {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .value {
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .section { margin-top: 18px; }
+    .paper-body { color: var(--ink); font-size: 1.02rem; }
+    a { color: var(--accent-2); text-decoration: none; font-weight: 700; }
+    .artifact-card strong { display: block; margin-bottom: 8px; color: var(--ink); }
+    .artifact-card p { margin: 0 0 10px; }
+    .footnote { margin-top: 18px; font-size: 0.88rem; }
+    @media (max-width: 760px) {
+      .hero, .meta-grid, .artifact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel hero">
+      <div>
+        <p class="eyebrow">E156 Submission</p>
+        <h1>DrivePulse</h1>
+        <p>
+          A publication-facing capsule for the folder-evidence gap: one live-scan dashboard, one bundled telemetry snapshot,
+          and one 156-word micro-paper built from the indexed C-drive paths.
+        </p>
+      </div>
+      <aside class="panel" style="padding:18px">
+        <p class="eyebrow" style="margin-bottom:10px">Audit Snapshot</p>
+        <div class="meta-grid" style="margin-top:0">
+          <div class="meta-card">
+            <span class="label">Unique paths</span>
+            <span class="value">107</span>
+          </div>
+          <div class="meta-card">
+            <span class="label">Specific paths</span>
+            <span class="value">105</span>
+          </div>
+          <div class="meta-card">
+            <span class="label">Git repos</span>
+            <span class="value">90</span>
+          </div>
+          <div class="meta-card">
+            <span class="label">Pages-ready</span>
+            <span class="value">83</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+    <section class="panel section">
+      <p class="eyebrow">Micro-paper</p>
+      <h2>156-word body</h2>
+      <p class="paper-body">
+        Can the portfolio atlas be linked back to live folder evidence rather than relying on index rows? We reused the bundled ResearchConstellation snapshot, deduplicated its 134 project records into 107 indexed paths, and refreshed those paths against the current C drive. DrivePulse v0.1 captured existence, recency, git state, README markers, test markers, paper artifacts, protocol artifacts, and Pages signals into a telemetry snapshot. All 105 specific filesystem paths were found live, and 85.7 percent (90 of 105) exposed git repositories while 79.0 percent (83 of 105) were already Pages-ready. Signal density peaked in tiers 4 and 7, whereas tier 12 collapsed to a generic root path and tier 8 remained operationally sparse. This shifts the next portfolio task from directory discovery toward index cleanup and evidence normalization, because the folders now exist but the metadata layer remains uneven. The scan improves operational visibility, but it is shallow, machine-specific, and cannot replace deeper repository or manuscript audits.
+      </p>
+    </section>
+    <section class="panel section">
+      <p class="eyebrow">Artifacts</p>
+      <h2>What ships with the capsule</h2>
+      <div class="artifact-grid">
+        <article class="artifact-card">
+          <strong>Live dashboard</strong>
+          <p>The working folder telemetry dashboard compiled from the bundled scan snapshot.</p>
+          <a href="../index.html">Open the dashboard</a>
+        </article>
+        <article class="artifact-card">
+          <strong>Protocol</strong>
+          <p>The live-folder audit plan defining the git-exposure estimand and scan boundaries.</p>
+          <a href="protocol.md">Read protocol.md</a>
+        </article>
+        <article class="artifact-card">
+          <strong>Machine-readable paper</strong>
+          <p>JSON metadata for the E156 body, sentence roles, and validation details.</p>
+          <a href="paper.json">Open paper.json</a>
+        </article>
+        <article class="artifact-card">
+          <strong>Dashboard handoff</strong>
+          <p>A lightweight page that points reviewers back to the root dashboard and scan snapshot.</p>
+          <a href="assets/dashboard.html">Open dashboard handoff</a>
+        </article>
+      </div>
+      <p class="footnote">
+        Source files ship with this repository: <a href="../scripts/build_drive_pulse.py">builder</a>, <a href="../data-source/folder-scan.snapshot.json">scan snapshot</a>, and <a href="../data-source/portfolio-data.snapshot.json">portfolio snapshot</a>.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
