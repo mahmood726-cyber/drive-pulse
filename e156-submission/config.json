@@ -37,5 +37,9 @@
       "role": "Boundary",
       "text": "The scan improves operational visibility, but it is shallow, machine-specific, and cannot replace deeper repository or manuscript audits."
     }
-  ]
+  ],
+  "author": "Mahmood Ahmad",
+  "affiliation": "Tahir Heart Institute",
+  "email": "mahmood.ahmad2@nhs.net",
+  "submitted": false
 }
