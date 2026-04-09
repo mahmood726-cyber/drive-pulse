@@ -2,7 +2,7 @@
   "title": "DrivePulse: Live Folder Telemetry for the C Drive Evidence Portfolio",
   "slug": "drive-pulse",
   "date": "2026-03-30",
-  "path": "C:\\Users\\user\\DrivePulse",
+  "path": "C:\\Projects\\DrivePulse",
   "type": "methods",
   "primary_estimand": "proportion of specific indexed paths exposing git repositories",
   "certainty": "moderate",
