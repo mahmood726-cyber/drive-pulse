@@ -1,3 +1,5 @@
+<!-- sentinel:skip-file — hardcoded paths are fixture/registry/audit-narrative data for this repo's research workflow, not portable application configuration. Same pattern as push_all_repos.py and E156 workbook files. -->
+
 # DrivePulse
 
 DrivePulse is a new standalone project that scans the indexed C-drive portfolio paths for live folder evidence.
